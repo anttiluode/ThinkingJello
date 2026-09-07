@@ -1,0 +1,368 @@
+{
+  "schema": "thinkingjello/measurement-1",
+  "scope": "Same numerical engine as the browser. Stationary body; 1800 learning steps, then frozen prediction on future randomized pings. Fixed geometry; seeds vary commands and observation noise. No hardware validation.",
+  "protocol": {
+    "seeds": [
+      7,
+      19,
+      42,
+      73,
+      101,
+      731
+    ],
+    "training_ticks": 1800,
+    "held_out_ticks": 360,
+    "disturbance_band": 1,
+    "reflector_relearning_ticks": 1400
+  },
+  "rows": [
+    {
+      "seed": 7,
+      "held_out": {
+        "raw_mse": 0.03191768228199605,
+        "residual_mse": 8.380396458323603e-7,
+        "explained": 0.9999737437186563,
+        "peak_residual_rms": 0.0029433007441984124,
+        "band_residual_mse": [
+          0.0000013485062096143721,
+          3.604814230099516e-7,
+          8.051313048727552e-7
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.03191768228199605,
+        "residual_mse": 0.03191768228199605,
+        "explained": 0,
+        "peak_residual_rms": 0.4647367177264844,
+        "band_residual_mse": [
+          0.030748685776326334,
+          0.03287812271999332,
+          0.032126238349668323
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.03804344108102756,
+        "residual_mse": 0.007701384262463443,
+        "explained": 0.7975634158313781,
+        "peak_residual_rms": 0.3915334275733767,
+        "band_residual_mse": [
+          8.097222772584578e-7,
+          0.023102709836060744,
+          6.332290523236326e-7
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.03264980923436586,
+        "residual_mse": 0.004183006461978465,
+        "explained": 0.8718826676152336,
+        "peak_residual_rms": 0.1425154699162731,
+        "band_residual_mse": [
+          0.001279553248641123,
+          0.0040779534386984825,
+          0.007191512698595815
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.03250582976537796,
+        "residual_mse": 7.30001830578619e-7,
+        "explained": 0.9999775424335927,
+        "peak_residual_rms": 0.0026932982521574137,
+        "band_residual_mse": [
+          3.051079144061963e-7,
+          3.684684417527762e-7,
+          0.0000015164291355768827
+        ]
+      }
+    },
+    {
+      "seed": 19,
+      "held_out": {
+        "raw_mse": 0.030817046119935212,
+        "residual_mse": 4.3671122976268573e-7,
+        "explained": 0.9999858289068958,
+        "peak_residual_rms": 0.0020579416888531887,
+        "band_residual_mse": [
+          2.832525639305474e-7,
+          7.450317009375961e-7,
+          2.8184942441991883e-7
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.030817046119935212,
+        "residual_mse": 0.030817046119935212,
+        "explained": 0,
+        "peak_residual_rms": 0.4559094018118683,
+        "band_residual_mse": [
+          0.030460116656872673,
+          0.03217307156222193,
+          0.029817950140711053
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.03511903054522776,
+        "residual_mse": 0.0076736289104319165,
+        "explained": 0.7814965620833555,
+        "peak_residual_rms": 0.3913837476743833,
+        "band_residual_mse": [
+          3.1479437120279345e-7,
+          0.023020285914510635,
+          2.8602241387379255e-7
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.03211340826956562,
+        "residual_mse": 0.003836291167536883,
+        "explained": 0.8805392708449263,
+        "peak_residual_rms": 0.14227331539093183,
+        "band_residual_mse": [
+          0.0012776155976052504,
+          0.004114986065217308,
+          0.006116271839788089
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.033640809953654545,
+        "residual_mse": 5.958964631763917e-7,
+        "explained": 0.9999822865007115,
+        "peak_residual_rms": 0.0020189142815698427,
+        "band_residual_mse": [
+          2.2989826480483714e-7,
+          2.0447490160715575e-7,
+          0.0000013533162231171812
+        ]
+      }
+    },
+    {
+      "seed": 42,
+      "held_out": {
+        "raw_mse": 0.03180460130381251,
+        "residual_mse": 8.983013041789594e-7,
+        "explained": 0.9999717556181384,
+        "peak_residual_rms": 0.0027238213510680865,
+        "band_residual_mse": [
+          0.0000012424945532789068,
+          0.0000010860203382380607,
+          3.663890210199174e-7
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.03180460130381251,
+        "residual_mse": 0.03180460130381251,
+        "explained": 0,
+        "peak_residual_rms": 0.45763839618183666,
+        "band_residual_mse": [
+          0.030427471671089893,
+          0.03266177650339478,
+          0.032324555736952865
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.041135527740527346,
+        "residual_mse": 0.007688728062288166,
+        "explained": 0.8130878954370844,
+        "peak_residual_rms": 0.3913789552129426,
+        "band_residual_mse": [
+          0.0000012359209415655676,
+          0.02306464243746748,
+          3.058284554386065e-7
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.03386422081732521,
+        "residual_mse": 0.0038927218313009413,
+        "explained": 0.8850491244933829,
+        "peak_residual_rms": 0.14217372939333367,
+        "band_residual_mse": [
+          0.0012793052284117085,
+          0.004242831291799438,
+          0.0061560289736916594
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.03373600860784735,
+        "residual_mse": 0.0000029543808062850517,
+        "explained": 0.9999124264864695,
+        "peak_residual_rms": 0.005375787225484599,
+        "band_residual_mse": [
+          0.00000107155362244169,
+          0.0000064903040722384515,
+          0.00000130128472417501
+        ]
+      }
+    },
+    {
+      "seed": 73,
+      "held_out": {
+        "raw_mse": 0.03126638910529435,
+        "residual_mse": 3.7824731970140517e-7,
+        "explained": 0.9999879024303565,
+        "peak_residual_rms": 0.0017336092317950212,
+        "band_residual_mse": [
+          1.9211471493739248e-7,
+          6.286874366878348e-7,
+          3.139398074789879e-7
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.03126638910529435,
+        "residual_mse": 0.03126638910529435,
+        "explained": 0,
+        "peak_residual_rms": 0.4563890268644612,
+        "band_residual_mse": [
+          0.030370227882773444,
+          0.03199702944693433,
+          0.03143190998617529
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.03966698319976326,
+        "residual_mse": 0.007698697475597778,
+        "explained": 0.8059167384414622,
+        "peak_residual_rms": 0.39147592499094624,
+        "band_residual_mse": [
+          2.3405247751849425e-7,
+          0.023095519564969465,
+          3.388093463771942e-7
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.03201978464300061,
+        "residual_mse": 0.0038208662331135398,
+        "explained": 0.8806717073299003,
+        "peak_residual_rms": 0.1423151158349014,
+        "band_residual_mse": [
+          0.0012800319561152415,
+          0.004076912167580732,
+          0.0061056545756446225
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.03328365130582677,
+        "residual_mse": 0.0000012620651340000255,
+        "explained": 0.9999620815299859,
+        "peak_residual_rms": 0.0032861565625164403,
+        "band_residual_mse": [
+          6.720589537378735e-7,
+          0.0000025152394049794986,
+          5.988970432827149e-7
+        ]
+      }
+    },
+    {
+      "seed": 101,
+      "held_out": {
+        "raw_mse": 0.03257212734307389,
+        "residual_mse": 4.11468087791452e-7,
+        "explained": 0.999987367478843,
+        "peak_residual_rms": 0.001921061485813798,
+        "band_residual_mse": [
+          2.6525533853736057e-7,
+          7.031318778236493e-7,
+          2.660170470133442e-7
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.03257212734307389,
+        "residual_mse": 0.03257212734307389,
+        "explained": 0,
+        "peak_residual_rms": 0.4574645649339185,
+        "band_residual_mse": [
+          0.03165094634247582,
+          0.0338834963610142,
+          0.032181939325731546
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.04145591915571144,
+        "residual_mse": 0.007693580282928519,
+        "explained": 0.8144153973759242,
+        "peak_residual_rms": 0.39127736804563257,
+        "band_residual_mse": [
+          1.8398482908738426e-7,
+          0.023080241050461494,
+          3.158134949428467e-7
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.034570813178478904,
+        "residual_mse": 0.003949941134036531,
+        "explained": 0.8857434705500229,
+        "peak_residual_rms": 0.14220875926728327,
+        "band_residual_mse": [
+          0.001379090032096046,
+          0.004358081198768151,
+          0.006112652171245434
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.03428296528797946,
+        "residual_mse": 0.000002380229808532273,
+        "explained": 0.9999305710638349,
+        "peak_residual_rms": 0.004594841618770262,
+        "band_residual_mse": [
+          3.218173709084906e-7,
+          4.5928033285292825e-7,
+          0.000006359591721835422
+        ]
+      }
+    },
+    {
+      "seed": 731,
+      "held_out": {
+        "raw_mse": 0.031129099975595733,
+        "residual_mse": 0.000001417886389897041,
+        "explained": 0.9999544514171304,
+        "peak_residual_rms": 0.00441520201943358,
+        "band_residual_mse": [
+          2.66228626806214e-7,
+          4.99277932525688e-7,
+          0.0000034881526103592353
+        ]
+      },
+      "copy_removed": {
+        "raw_mse": 0.031129099975595733,
+        "residual_mse": 0.031129099975595733,
+        "explained": 0,
+        "peak_residual_rms": 0.46625946113750744,
+        "band_residual_mse": [
+          0.030220431595630773,
+          0.032037088091493936,
+          0.031129780239662803
+        ]
+      },
+      "one_band_disturbance": {
+        "raw_mse": 0.0391353382367991,
+        "residual_mse": 0.007702030815993548,
+        "explained": 0.8031949853252757,
+        "peak_residual_rms": 0.3915455110597111,
+        "band_residual_mse": [
+          3.1018586300963053e-7,
+          0.02310196327188209,
+          0.000003818990235626683
+        ]
+      },
+      "reflector_changed_frozen": {
+        "raw_mse": 0.03430930274774359,
+        "residual_mse": 0.004147871617647674,
+        "explained": 0.8791035874979864,
+        "peak_residual_rms": 0.1430569534051434,
+        "band_residual_mse": [
+          0.0012864047709612884,
+          0.00502918185948555,
+          0.006128028222496213
+        ]
+      },
+      "reflector_relearned": {
+        "raw_mse": 0.03189636351384902,
+        "residual_mse": 6.113064649216583e-7,
+        "explained": 0.9999808346031467,
+        "peak_residual_rms": 0.0018396146076068848,
+        "band_residual_mse": [
+          3.095378941987508e-7,
+          0.00000118370425778017,
+          3.4067724278605706e-7
+        ]
+      }
+    }
+  ]
+}

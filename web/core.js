@@ -146,7 +146,7 @@
         w.body.x=clamp(w.body.x+w.body.vx,.13,1.37); w.body.y=clamp(w.body.y+w.body.vy,.13,.87); this.motion--;
       } else {w.body.vx*=.8; w.body.vy*=.8;}
       this.status=!this.copy ? 'Without my internal copy' : this.motion>0 ? 'Turning toward a mismatch' : w.tick<600 ? 'Learning my echo' : this.surprise>.045 ? 'Something does not fit' : this.fit>.8 ? 'My echo is familiar' : 'Updating my expectation';
-      const sample={t:w.tick,y:this.observed[0],p:this.predicted[0],r:this.residual[0],surprise:this.surprise,band:launch?.band??-1};
+      const sample={t:w.tick,y:this.observed[0],p:this.predicted[0],r:this.residual[0],ys:[0,4,8].map(i=>this.observed[i]),ps:[0,4,8].map(i=>this.predicted[i]),rs:[0,4,8].map(i=>this.residual[i]),surprise:this.surprise,band:launch?.band??-1};
       this.history.push(sample); if(this.history.length>600) this.history.shift();
       if(w.tick%12===0) {this.path.push({x:w.body.x,y:w.body.y}); if(this.path.length>260)this.path.shift();}
       w.advance(); return launch;
@@ -163,7 +163,7 @@
       const arr=(a,n)=>Array.isArray(a)&&a.length===n&&a.every(finite);
       if(!arr(s.energy,3)||!arr(s.mismatch,3)||!arr(s.bandCount,3)||!arr(s.lastCommand,3)||!arr(s.attention,2)||![s.rng,s.world.rng,s.pings,s.nextPing,s.motion,s.lastMove,s.surprise].every(finite)) throw Error('Invalid organism state.');
       if(!s.controls||![-1,0,1,2].includes(s.controls.band)||!['copy','learning','roam','auto'].every(k=>typeof s.controls[k]==='boolean'))throw Error('Invalid controls.');
-      if(!Array.isArray(s.history)||s.history.length>600||!s.history.every(h=>[h.t,h.y,h.p,h.r,h.surprise,h.band].every(finite))||!Array.isArray(s.path)||s.path.length>260||!s.path.every(pos))throw Error('Invalid trace.');
+      if(!Array.isArray(s.history)||s.history.length>600||!s.history.every(h=>[h.t,h.y,h.p,h.r,h.surprise,h.band].every(finite)&&['ys','ps','rs'].every(k=>h[k]===undefined||arr(h[k],3)))||!Array.isArray(s.path)||s.path.length>260||!s.path.every(pos))throw Error('Invalid trace.');
       Object.assign(o.world,{tick:s.world.tick,body:{...s.world.body},reflectors:s.world.reflectors.map(r=>({...r})),events:s.world.events.map(e=>({...e}))}); o.world.rng.state=s.world.rng>>>0; o.rng.state=s.rng>>>0;
       Object.assign(o,s.controls); for(const k of ['pings','nextPing','motion','lastMove','surprise'])o[k]=s[k];
       for(const k of ['energy','mismatch','bandCount','history','path','lastCommand','attention'])o[k]=structuredClone(s[k]);

@@ -21,9 +21,10 @@
         this.analyser.fftSize=2048;this.analyser.smoothingTimeConstant=0;
         this.input.connect(this.analyser); // deliberately never connect microphone to output
         this.spectrum=new Float32Array(this.analyser.frequencyBinCount);
+        this.model.history.forEach(h=>h.fill(0));this.model.features.forEach(h=>h.fill(0));this.model.head=0;
         this.tick=0;this.nextPing=65;this.baseline=[0,0,0];this.running=true;this.lastWall=performance.now();
         return true;
-      } catch(e) {this.stop();throw e;}
+      } catch(e) {if(this.context===ctx)this.stop();else ctx.close().catch(()=>{});throw e;}
     }
     stop() {
       this.running=false;
@@ -56,11 +57,11 @@
       let rr=0;
       for(let b=0;b<3;b++){this.energy[b]=.97*this.energy[b]+.03*this.observed[b]**2;this.mismatch[b]=.97*this.mismatch[b]+.03*this.residual[b]**2;rr+=this.residual[b]**2;}
       this.surprise=.87*this.surprise+.13*Math.sqrt(rr/3);
-      this.history.push({t:this.tick,y:this.observed[0],p:this.predicted[0],r:this.residual[0],surprise:this.surprise,band:launch?.band??-1});if(this.history.length>600)this.history.shift();
+      this.history.push({t:this.tick,y:this.observed[0],p:this.predicted[0],r:this.residual[0],ys:Array.from(this.observed),ps:Array.from(this.predicted),rs:Array.from(this.residual),surprise:this.surprise,band:launch?.band??-1});if(this.history.length>600)this.history.shift();
       this.tick++;return launch;
     }
-    get fit(){return Jello.clamp(1-this.mismatch.reduce((a,b)=>a+b,0)/(this.energy.reduce((a,b)=>a+b,0)+1e-8),0,1);}
-    get status(){return !this.running?'A window into your room':this.tick<60?'Listening before I act':!this.copy?'Without my internal copy':this.surprise>.04?'Something does not fit':this.fit>.7?'Learning the room’s response':'Listening to my own pings';}
+    get fit(){const power=this.energy.reduce((a,b)=>a+b,0);return power<1e-7?0:Jello.clamp(1-this.mismatch.reduce((a,b)=>a+b,0)/(power+1e-8),0,1);}
+    get status(){return !this.running?'A window into your room':this.tick<60?'Listening before I act':!this.copy?'Without my internal copy':this.tick>120&&this.energy.reduce((a,b)=>a+b,0)<1e-7?'No clear return at the microphone':this.surprise>.04?'Something does not fit':this.fit>.7?'Learning the room’s response':'Listening to my own pings';}
     snapshot(){return {schema:'thinkingjello/room-1',model:this.model.toJSON(),volume:this.volume};}
     static restore(s){if(s?.schema!=='thinkingjello/room-1'||!Number.isFinite(s.volume)||s.volume<0||s.volume>.08)throw Error('Invalid room memory.');const r=new RoomEar();r.model=Jello.Predictor.fromJSON(s.model);if(r.model.ears!==1)throw Error('Invalid room model.');r.volume=s.volume;return r;}
   }

@@ -73,6 +73,12 @@ The browser and checks execute the same [numerical engine](web/core.js).
 See [MODEL.md](MODEL.md) for the exact equations, information boundary and limitations.
 The existing GitHub Pages workflow publishes the repository root.
 
+**[Measured results](RESULTS.md):** seven checks pass. Across six seeds, with the body
+stationary and learning frozen, the model explains **99.995–99.999%** of future simulated
+returns. Removing the internal copy reduces that score to **0%**. Changing a reflector
+breaks the old prediction; relearning restores it. The real-room adapter remains
+unvalidated on hardware. [Raw receipt](results/measurement.json).
+
 This is a small predictive organism experiment. It does not demonstrate consciousness,
 understanding, biological circuitry or autonomous discovery of a learning algorithm.
 

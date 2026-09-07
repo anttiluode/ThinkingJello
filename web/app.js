@@ -74,8 +74,9 @@ function drawBody(){
     ctx.fillStyle=er>.04?'#ffcf91':'#aefbe1';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=7+er*15;ctx.beginPath();ctx.arc(x,y,2+clamp(er*6,0,4),0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
   ctx.font='11px system-ui';ctx.textAlign='center';ctx.fillStyle='#9fc5c5';ctx.fillText(mode==='pond'?'FOUR LOCAL SENSORS':'ONE MICROPHONE',cx,cy+base*1.6);
 }
+function selectedHistory(h){return h.map(p=>({...p,y:p.ys?.[selectedBand]??p.y,p:p.ps?.[selectedBand]??p.p,r:p.rs?.[selectedBand]??p.r}));}
 function charts(){
-  const d=data(),h=d.history.slice(-190),w=trace.width/DPR,hh=trace.height/DPR;
+  const d=data(),h=selectedHistory(d.history.slice(-190)),w=trace.width/DPR,hh=trace.height/DPR;
   tc.setTransform(DPR,0,0,DPR,0,0);tc.clearRect(0,0,w,hh);
   const max=Math.max(.12,...h.flatMap(p=>[Math.abs(p.y),Math.abs(p.p)]));
   for(const y of [hh*.33,hh*.8]){tc.strokeStyle='#2b404b';tc.lineWidth=.6;tc.beginPath();tc.moveTo(0,y);tc.lineTo(w,y);tc.stroke();}
@@ -83,10 +84,10 @@ function charts(){
     tc.beginPath();h.forEach((p,i)=>{const x=i/190*w,yy=y-p[key]/max*amp;i?tc.lineTo(x,yy):tc.moveTo(x,yy);});tc.strokeStyle=color;tc.lineWidth=key==='p'?1:1.4;tc.setLineDash(key==='p'?[3,3]:[]);tc.stroke();}tc.setLineDash([]);
   const pw=phase.width/DPR,ph=phase.height/DPR;pc.setTransform(DPR,0,0,DPR,0,0);pc.clearRect(0,0,pw,ph);
   const a=visualTick*.0008;pc.strokeStyle='#26434f';pc.lineWidth=.6;pc.beginPath();pc.moveTo(pw*.1,ph*.5);pc.lineTo(pw*.9,ph*.5);pc.moveTo(pw*.5,ph*.1);pc.lineTo(pw*.5,ph*.9);pc.stroke();
-  const hist=d.history.slice(-300);pc.beginPath();for(let i=16;i<hist.length;i++){const x=hist[i].y/max,z=hist[i-16].y/max,y=hist[i-8].y/max,px=pw*.5+(x*Math.cos(a)+z*Math.sin(a))*pw*.35,py=ph*.5+(y*.8+z*.25)*ph*.39;i===16?pc.moveTo(px,py):pc.lineTo(px,py);}pc.strokeStyle='#94dbcf';pc.lineWidth=.8;pc.stroke();
+  const hist=selectedHistory(d.history.slice(-300));pc.beginPath();for(let i=16;i<hist.length;i++){const x=hist[i].y/max,z=hist[i-16].y/max,y=hist[i-8].y/max,px=pw*.5+(x*Math.cos(a)+z*Math.sin(a))*pw*.35,py=ph*.5+(y*.8+z*.25)*ph*.39;i===16?pc.moveTo(px,py):pc.lineTo(px,py);}pc.strokeStyle=COLORS[selectedBand];pc.lineWidth=.8;pc.stroke();
 }
 function updateUI(){
-  const d=data(),fit=Math.round(d.fit*100);$('state').textContent=d.status;$('fit').innerHTML=`${fit}<span>%</span>`;$('fitBar').style.width=fit+'%';$('fitLabel').textContent=!d.copy?'COPY OFF':!d.learning?'FROZEN':fit>95?'FAMILIAR':'ADAPTING';
+  const d=data(),fit=Math.round(d.fit*100);$('state').textContent=d.status;$('fit').innerHTML=`${fit}<span>%</span>`;$('fitBar').style.width=fit+'%';$('fitLabel').textContent=!d.copy?'COPY OFF':!d.learning?'FROZEN':fit>95?'FAMILIAR':'ADAPTING';$('signalBand').textContent=bandNames[selectedBand].toUpperCase()+' BAND';
   $('pingCount').textContent=d.pings+' pings sent';const sec=Math.floor((mode==='pond'?organism.world.tick:room.tick)/30);$('age').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
   for(let b=0;b<3;b++){const r=Math.sqrt(d.mismatch[b]);$('bandMeter'+b).style.width=clamp(r*500,0,100)+'%';$('bandValue'+b).textContent=r.toFixed(2);}
   $('narration').textContent=mode==='room'?room.running?(room.tick<60?'First, the sound of the room without a ping.':'The speaker sends a pulse. The microphone brings it back.'):'Connect the microphone when you are ready.':!organism.copy?'Its own pulse now arrives without an explanation.':organism.motion?'The mismatch changed its movement. Now the echo must be learned again.':organism.fit>.95?'The familiar part fades. Something new can stand out.':'The violet prediction is learning to follow the return.';
@@ -107,7 +108,7 @@ $('pondTab').onclick=()=>changeMode('pond');$('roomTab').onclick=()=>changeMode(
 $('copy').onchange=e=>data().copy=e.target.checked;$('learn').onchange=e=>data().learning=e.target.checked;$('roam').onchange=e=>organism.roam=e.target.checked;
 $('speed').onchange=e=>simSpeed=Number(e.target.value);$('band').onchange=e=>selectedBand=Number(e.target.value);
 $('pause').onclick=()=>{paused=!paused;$('pause').textContent=paused?'▶':'Ⅱ';$('pause').setAttribute('aria-label',paused?'Resume simulation':'Pause simulation');if(paused&&mode==='room'){room.stop();$('connectMic').disabled=false;$('stopMic').disabled=true;notify('Microphone and speaker stopped.');}};
-$('ping').onclick=()=>{if(paused)notify('Resume to let the signal travel.');organism.ping(selectedBand);};
+$('ping').onclick=()=>{if(paused){notify('Resume to let the signal travel.');return;}organism.ping(selectedBand);};
 $('disturb').onclick=()=>organism.disturb(clamp(organism.world.body.x+.24,.06,1.44),clamp(organism.world.body.y-.09,.06,.94),selectedBand,1.6);
 $('shift').onclick=()=>{const r=organism.world.reflectors[1];r.y=r.y<.5?.67:.3;notify('The reflector moved. The prediction has not been told.');};
 function pointerPos(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left-ox)/scale,y:(e.clientY-r.top-oy)/scale};}
